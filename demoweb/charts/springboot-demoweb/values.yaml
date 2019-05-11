@@ -4,12 +4,12 @@
 replicaCount: 1
 image:
   repository: binblee/springboot-helm-chart
-  tag: openjdk-9-jre
+  tag: latest
   pullPolicy: IfNotPresent
 service:
   name: nginx
   type: NodePort
-  externalPort: 8080
+  externalPort: 8081
   internalPort: 8080
 ingress:
   enabled: false
