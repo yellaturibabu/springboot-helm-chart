@@ -8,12 +8,12 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh './mvnw package'
+        sh './demoweb/mvnw package'
       }
     }
     stage('Test') {
       steps {
-        sh './mvnw test '
+        sh './demoweb/mvnw test '
       }
     }
     stage('Code Quality') {
