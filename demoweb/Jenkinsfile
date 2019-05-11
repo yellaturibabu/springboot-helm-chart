@@ -1,7 +1,7 @@
 pipeline {
    environment {
-     REGISTRY_ENDPOINT = "https://binblee/v2/"
-     IMAGE_WITH_TAG = "binblee/springboot-helm-chart"
+     REGISTRY_ENDPOINT = "'https://index.docker.io/v1/"
+     IMAGE_WITH_TAG = "yellaturibabu/springboot-helm-chart"
      REGISTRY_CERTS = "registry"
    }
   agent {
