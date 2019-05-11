@@ -8,12 +8,14 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh './demoweb/mvnw package'
+        sh 'cd demoweb'
+        sh './mvnw install'
       }
     }
     stage('Test') {
       steps {
-        sh './demoweb/mvnw test '
+        sh 'cd demoweb'
+        sh './mvnw test '
       }
     }
     stage('Code Quality') {
