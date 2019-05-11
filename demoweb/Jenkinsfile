@@ -9,7 +9,7 @@ pipeline {
     stage('Build') {
       steps {
 
-        sh 'cd demoweb; ./mvnw install'
+        sh 'cd demoweb; ./mvnw package'
       }
     }
     stage('Test') {
