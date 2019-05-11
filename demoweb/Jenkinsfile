@@ -4,12 +4,7 @@ pipeline {
      IMAGE_WITH_TAG = "yellaturibabu/springboot-helm-chart"
      REGISTRY_CERTS = "registry"
    }
-  agent {
-    node {
-      label 'java'
-    }
-
-  }
+  agent any
   stages {
     stage('Build') {
       steps {
