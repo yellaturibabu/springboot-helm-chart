@@ -8,26 +8,13 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'cd demoweb'
-        sh './mvnw install'
+
+        sh 'cd cd demoweb; ./mvnw install'
       }
     }
     stage('Test') {
       steps {
-        sh 'cd demoweb'
-        sh './mvnw test '
-      }
-    }
-    stage('Code Quality') {
-      steps {
-        script {
-          try{
-            checkstyle canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '', unHealthy: ''
-          }catch(e){
-            echo e
-          }
-        }
-
+        sh 'cd cd demoweb; ./mvnw test '
       }
     }
     stage('Image Build&Publish') {
