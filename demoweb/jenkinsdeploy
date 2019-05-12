@@ -1,0 +1,59 @@
+pipeline {
+  agent { label "st-docker" }
+   environment {
+    JENKINS_DEPLOY = 'true'	   
+  }
+   options {
+   timestamps()
+  }
+  parameters {
+    string(name: 'Version', description: 'The version of the package to be deployed,')
+     }
+  stages {
+   stage('Clone repository') {
+     steps{
+        /* Let's make sure we have the repository cloned to our workspace */
+         checkout scm
+   	 }
+    }
+    stage('install packages') {
+      steps {
+        sh 'curl -O https://storage.googleapis.com/kubernetes-helm/helm-v2.9.1-linux-amd64.tar.gz'
+        sh 'tar -xvf helm-v2.9.1-linux-amd64.tar.gz'
+        sh 'curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.14.0/bin/linux/amd64/kubectl'
+        sh 'chmod +x ./kubectl'
+        sh 'chmod 777 ./linux-amd64/helm'
+        sh './linux-amd64/helm version -c'
+        load 'demoweb/environmnet.groovy'
+      }
+    }
+
+    stage('get credentials') {
+      steps {
+        withCredentials(bindings: [[$class: 'FileBinding', credentialsId: 'pg-us-p-app-329817', variable: 'GOOGLE_APPLICATION_CREDENTIALS']]) {
+          sh "gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS"
+          sh "gcloud container clusters get-credentials ${CLUSTER} --zone ${ZONE} --project ${PROJECT}"
+        }
+
+      }
+    }
+    stage('Deploy (dev)') {
+      steps {
+	sh "./linux-amd64/helm list"
+	sh "./linux-amd64/helm upgrade --install ${RELEASE_NAME} --set image.layout.tag=${Version} -f values/dev/dev-layout-values.yaml  helm/layout"
+      }
+    }
+  }
+    post {
+        //changed {}
+        //aborted {}
+        //failure {}
+        //success {}
+        //unstable {}
+        //notBuilt {}
+        always {
+            echo "Clearing workspace"
+        }
+    }
+}
+
