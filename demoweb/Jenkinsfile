@@ -9,12 +9,12 @@ pipeline {
     stage('Build') {
       steps {
 
-        //sh 'cd demoweb; ./mvnw package'
+        echo 'Build Images''
       }
     }
     stage('Test') {
       steps {
-        //sh 'cd demoweb; ./mvnw test '
+      echo 'Build Images'
       }
     }
     stage('Image Build&Publish') {
