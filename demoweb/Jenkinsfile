@@ -9,26 +9,38 @@ pipeline {
     stage('Build') {
       steps {
 
-        sh 'cd demoweb; ./mvnw package'
+        //sh 'cd demoweb; ./mvnw package'
       }
     }
     stage('Test') {
       steps {
-        sh 'cd demoweb; ./mvnw test '
+        //sh 'cd demoweb; ./mvnw test '
       }
     }
     stage('Image Build&Publish') {
       steps {
         echo 'Build Images'
-        script {
-          docker.withRegistry("${REGISTRY_ENDPOINT}", "${REGISTRY_CERTS}") {
-           // sh 'cd demoweb; docker build -t ${IMAGE_WITH_TAG} .'
-            //sh 'cd demoweb; docker push ${IMAGE_WITH_TAG}'
-          }
-        }
-
       }
     }
+   stage('deploy to dev') {
+            when {
+                branch 'development'
+            }
+
+            steps {
+               echo 'Build Images'
+            }
+        }
+        stage('deploy to qa') {
+            when {
+                branch 'master'
+            }
+
+            steps {
+               echo 'Build Images'
+            }
+        }
+     
   }
   triggers {
     pollSCM('* * * * *')
