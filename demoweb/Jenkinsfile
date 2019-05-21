@@ -24,7 +24,7 @@ pipeline {
     }
    stage('deploy to dev') {
             when {
-                branch 'development'
+                branch 'master'
             }
 
             steps {
@@ -33,7 +33,7 @@ pipeline {
         }
         stage('deploy to qa') {
             when {
-                branch 'master'
+                branch 'release'
             }
 
             steps {
