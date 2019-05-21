@@ -23,10 +23,6 @@ pipeline {
       }
     }
    stage('deploy to dev') {
-            when {
-                branch 'master'
-            }
-
             steps {
                echo 'Build Images'
             }
