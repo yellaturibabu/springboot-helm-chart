@@ -23,14 +23,15 @@ pipeline {
       }
     }
    stage('deploy to dev') {
+           when {
+                branch 'release'
+            }
+
             steps {
                echo 'Build Images'
             }
         }
         stage('deploy to qa') {
-            when {
-                branch 'release'
-            }
 
             steps {
                echo 'Build Images'
